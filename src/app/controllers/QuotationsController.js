@@ -1,12 +1,12 @@
-const Quotation=require('../models/Quotation');
+const Quotation = require('../models/Quotation');
 
-class quotationsController{
+class quotationsController {
 
     //[GET] /quotations/getAll
     async getAll(req, res) {
         try {
             const quotations = await Quotation.find({});
-            res.status(200).json({ success: true, message: 'Get all quotation successfully', quotations});
+            res.status(200).json({ success: true, message: 'Get all quotation successfully', quotations });
             console.log('Get all quotation successfully');
         } catch (error) {
             console.log(error)
@@ -19,7 +19,7 @@ class quotationsController{
         try {
             const newQuotation = new Quotation(req.body);
             await newQuotation.save();
-            res.status(200).json({ success: true, message: 'Create new quotation successfully', newQuotation});
+            res.status(200).json({ success: true, message: 'Create new quotation successfully', newQuotation });
         } catch (error) {
             console.log(error)
             res.status(400).json({ success: false, message: 'Create failed' })
@@ -29,14 +29,40 @@ class quotationsController{
     //[POST] /quotations/update
     async update(req, res) {
         try {
-                const updateQuotation = await Quotation.findByIdAndUpdate(req.params._id, req.body, { new: true });
-            res.status(200).json({ success: true, message: 'Update quotation successfully', updateQuotation});
+            const updateQuotation = await Quotation.findByIdAndUpdate(req.params._id, req.body, { new: true });
+            res.status(200).json({ success: true, message: 'Update quotation successfully', updateQuotation });
             console.log('Update quotation successfully');
         } catch (error) {
             console.log(error)
             res.status(400).json({ success: false, message: 'Update failed' })
         }
     }
+
+    //[GET] /quotations/search
+    async search(req, res) {
+        try {
+            const { pol, pod } = req.query;
+            console.log(pol, pod);
+            if (pol) {
+                const quotations = await Quotation.find({ pol });
+                return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
+                console.log('Search quotation successfully');
+            } else
+                if (pod) {
+                    const quotations = await Quotation.find({ pod });
+                    return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
+                    console.log('Search quotation successfully');
+                } else
+                    if (pol && pod) {
+                        const quotations = await Quotation.find({ pol, pod });
+                        res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
+                        console.log('Search quotation successfully');
+                    }
+        } catch (error) {
+            console.log(error)
+            return res.status(400).json({ success: false, message: 'Search failed' })
+        }
+    }
 }
 
-module.exports=new quotationsController
+module.exports = new quotationsController

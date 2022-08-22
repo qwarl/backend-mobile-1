@@ -5,5 +5,6 @@ const quotationsController = require('../app/controllers/QuotationsController');
 router.get('/getAll', quotationsController.getAll);
 router.post('/create', quotationsController.create);
 router.post('/update/:_id', quotationsController.update);
+router.get('/search', quotationsController.search);
 
 module.exports = router;
