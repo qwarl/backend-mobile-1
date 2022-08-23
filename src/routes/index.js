@@ -1,7 +1,7 @@
 const quotationsRoute = require('./quotations');
 
 function route(app) {
-    app.use('/quotations', quotationsRoute);
+    app.use('/api/quotations', quotationsRoute);
 }
 
 module.exports = route

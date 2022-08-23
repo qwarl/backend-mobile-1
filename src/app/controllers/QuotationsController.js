@@ -41,8 +41,8 @@ class quotationsController {
     //[GET] /quotations/search
     async search(req, res) {
         try {
-            const { pol, pod } = req.query;
-            console.log(pol, pod);
+            const { pol, pod, type } = req.query;
+            // console.log(pol, pod, type);
             if (pol) {
                 const quotations = await Quotation.find({ pol });
                 return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
@@ -55,9 +55,15 @@ class quotationsController {
                 } else
                     if (pol && pod) {
                         const quotations = await Quotation.find({ pol, pod });
-                        res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
+                        return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
                         console.log('Search quotation successfully');
-                    }
+                    } else
+                        if (type) {
+                            const quotations = await Quotation.find({ type });
+                            return res.status(200).json({ success: true, message: 'Search by type ' + quotations.type, quotations })
+                            console.log('Search quotation successfully');
+
+                        }
         } catch (error) {
             console.log(error)
             return res.status(400).json({ success: false, message: 'Search failed' })
