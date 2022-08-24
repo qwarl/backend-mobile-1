@@ -10,6 +10,14 @@ const Quotation = new Schema({
         type: String,
         required: true
     },
+    month:{
+        type:Number,
+        required:true,
+    },
+    continent:{
+        type:String,
+        required:true,
+    },
     type: {
         type: String,
         required: true
