@@ -42,43 +42,40 @@ class quotationsController {
     async search(req, res) {
         try {
             const { pol, pod, type, month, continent } = req.query;
-            // console.log(pol, pod, type);
-            // if (pol) {
-            //     const quotations = await Quotation.find({ pol });
-            //     return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
-            //     console.log('Search quotation successfully');
-            // } else
-            //     if (pod) {
-            //         const quotations = await Quotation.find({ pod });
-            //         return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
-            //         console.log('Search quotation successfully');
-            //     } else
-            //         if (pol && pod) {
-            //             const quotations = await Quotation.find({ pol, pod });
-            //             return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
-            //             console.log('Search quotation successfully');
-            //         } else
-            //             if (type) {
-            //                 const quotations = await Quotation.find({ type });
-            //                 return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations })
-            //                 console.log('Search quotation successfully');
-            //             }
+            // console.log(pol, pod, type, month, continent);    
 
-            if (month) {
-                const quotations = await Quotation.find({ month });
+            // const quotations = await Quotation.find($or:[{region: "NA"},{sector:"Some Sector"}]);
+
+            const query1 = [{ month: month }, { continent: continent }]
+            const query2 = [{ month: month }, { continent: continent }, { type: type }]
+
+            //code goc
+            // const quotations = await Quotation.find({ $and: [{ month: month }, { continent: continent }] });
+            // return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
+            // console.log('Search quotation successfully')
+
+            //code lam, sua, pha
+            // const quotations = await Quotation.find({
+            //     $or: [
+            //         { pol: pol },
+            //         { pod: pod },
+            //         { month: month },
+            //         { continent: continent },
+            //         { type: type },
+            //         { $and: [{ $and: [{ month: month }, { continent: continent }] }] },
+            //         { $and: [{ month: month }, { continent: continent }, { type: type }] }
+            //     ]
+            // });
+
+            if (month.length > 0 && continent.length > 0 && type.length > 0) {
+                const quotations = await Quotation.find({ $and: [{ month: month }, { continent: continent }, { type: type }] });
                 return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
-                console.log('Search quotation successfully');
-            } else
-                if (continent) {
-                    const quotations = await Quotation.find({ continent });
-                    return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
-                    console.log('Search quotation successfully');
-                } else
-                    if (month && continent) {
-                        const quotations = await Quotation.find({ month, continent });
-                        return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
-                        console.log('Search quotation successfully');
-                    }
+                console.log('Search quotation successfully')
+            }
+
+            // const quotations = await Quotation.find({ $or: [{ pol: pol }, { pod: pod }, { type: type }, { month: month }, { continent: continent }] });
+            // return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
+            // console.log('Search quotation successfully')
 
         } catch (error) {
             console.log(error)
