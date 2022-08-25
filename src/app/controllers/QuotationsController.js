@@ -1,4 +1,4 @@
-const Quotation = require('../models/Quotation');
+const Quotation = require('../models/QuotationLog');
 
 class quotationsController {
 
@@ -44,11 +44,7 @@ class quotationsController {
             const { pol, pod, type, month, continent } = req.query;
             // console.log(pol, pod, type, month, continent);    
 
-            //code goc
-            // const quotations = await Quotation.find({ $and: [{ month: month }, { continent: continent }] });
-            // return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
-            // console.log('Search quotation successfully')
-
+            //code sua
 
             if (month && continent && type) {
                 const quotations = await Quotation.find({ $and: [{ month: month }, { continent: continent }, { type: type }] });
@@ -103,58 +99,6 @@ class quotationsController {
                 return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
                 console.log('Search quotation successfully')
             }
-
-
-
-            //code goc
-            // if (month.length > 0 && continent.length > 0 && type.length > 0) {
-            //     const quotations = await Quotation.find({ $and: [{ month: month }, { continent: continent }, { type: type }] });
-            //     return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
-            //     console.log('Search quotation successfully')
-            // }
-            // if (month.length > 0 && continent.length > 0) {
-            //     const quotations = await Quotation.find({ $and: [{ month: month }, { continent: continent }] });
-            //     return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
-            //     console.log('Search quotation successfully')
-            // }
-            // if (month.length > 0 && type.length > 0) {
-            //     const quotations = await Quotation.find({ $and: [{ month: month }, { type: type }] });
-            //     return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
-            //     console.log('Search quotation successfully')
-            // }
-            // if (continent.length > 0 && type.length > 0) {
-            //     const quotations = await Quotation.find({ $and: [{ continent: continent }, { type: type }] });
-            //     return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
-            //     console.log('Search quotation successfully')
-            // }
-
-
-            // if (pol.length > 0 && pod.length > 0 && type.length > 0) {
-            //     const quotations = await Quotation.find({ $and: [{ pol: pol }, { pod: pod }, { type: type }] });
-            //     return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
-            //     console.log('Search quotation successfully')
-            // }
-            // if (pol.length > 0 && pod.length > 0) {
-            //     const quotations = await Quotation.find({ $and: [{ pol: pol }, { pod: pod }] });
-            //     return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
-            //     console.log('Search quotation successfully')
-            // }
-            // if (pol.length > 0 && type.length > 0) {
-            //     const quotations = await Quotation.find({ $and: [{ pol: pol }, { type: type }] });
-            //     return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
-            //     console.log('Search quotation successfully')
-            // }
-            // if (pod.length > 0 && type.length > 0) {
-            //     const quotations = await Quotation.find({ $and: [{ pod: pod }, { type: type }] });
-            //     return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
-            //     console.log('Search quotation successfully')
-            // }
-
-            // else {
-            //     const quotations = await Quotation.find({ $or: [{ pol: pol }, { pod: pod }, { type: type }, { month: month }, { continent: continent }] });
-            //     return res.status(200).json({ success: true, message: 'Search quotation successfully', quotations });
-            //     console.log('Search quotation successfully')
-            // }
 
         } catch (error) {
             console.log(error)
