@@ -30,35 +30,35 @@ const PhongLog = new Schema({
     },
     pol: {
         type: String,
-        // required: true
+        required: true
     },
     pod: {
         type: String,
-        // required: true
+        required: true
     },
     typeProduct:{
         type:String,
-        // required:true,
+        required:true,
     },
     quantity:{
         type:String,
-        // required:true,
+        required:true,
     },
     requirement: {
         type: String,
-        // required: true
+        required: true
     },
     price: {
         type: String,
-        // required: true
+        required: true
     },
     type: {
         type: String,
-        // required: true
+        required: true
     },
     userCreate: {
         type: String,
-        // required: true
+        required: true
     },
     userUpdate: {
         type: String,

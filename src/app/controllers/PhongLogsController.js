@@ -38,27 +38,25 @@ class phongLogsController {
         }
     }
 
+
     //[GET] /phongLogs/search
     async search(req, res) {
         try {
-            const { name, month, freight } = req.query;
+            const { pol, pod, month, freight } = req.query;
             // console.log(pol, pod, type, month, continent);    
 
             //code sua
 
-            if (name && month && freight) {
-                const phongLogs = await PhongLog.find({ $and: [{ name: name }, { month: month }, { freight: freight }] });
+            if (pol && month && freight) {
+                const phongLogs = await PhongLog.find({ $and: [{ pol: pol }, { month: month }, { freight: freight }] });
                 return res.status(200).json({ success: true, message: 'Search phong log successfully', phongLogs });
                 console.log('Search phong log successfully')
             }
-
-            //can sua gi thi lay doan cmt nay cho le
-
-            // else {
-            //     const phongLogs = await PhongLog.find({ $or: [{ name: name }, { month: month }, { freight: freight }] });
-            //     return res.status(200).json({ success: true, message: 'Search phong log successfully', phongLogs });
-            //     console.log('Search quotation successfully')
-            // }
+            if (pod && month && freight) {
+                const phongLogs = await PhongLog.find({ $and: [{ pod: pod }, { month: month }, { freight: freight }] });
+                return res.status(200).json({ success: true, message: 'Search phong log successfully', phongLogs });
+                console.log('Search phong log successfully')
+            }
 
         } catch (error) {
             console.log(error)
