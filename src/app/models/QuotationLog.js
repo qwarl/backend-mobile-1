@@ -4,63 +4,63 @@ const Schema = mongoose.Schema;
 const Quotation = new Schema({
     pol: {
         type: String,
-        required: true
+        // required: true
     },
     pod: {
         type: String,
-        required: true
+        // required: true
     },
     month:{
         type:String,
-        required:true,
+        // required:true,
     },
     continent:{
         type:String,
-        required:true,
+        // required:true,
     },
     type: {
         type: String,
-        required: true
+        // required: true
     },
     of20gp: {
         type: Number,
-        required: true
+        // required: true
     },
     of40gp: {
         type: Number,
-        required: true
+        // required: true
     },
     of45gp: {
         type: Number,
-        required: true
+        // required: true
     },
     sur20: {
         type: String,
-        required: true
+        // required: true
     },
     sur40: {
         type: String,
-        required: true
+        // required: true
     },
     lines: {
         type: String,
-        required: true
+        // required: true
     },
     freeTime: {
         type: String,
-        required: true
+        // required: true
     },
     valid: {
         type: String,
-        required: true
+        // required: true
     },
     notes: {
         type: String,
-        required: true
+        // required: true
     },
     userCreate: {
         type: String,
-        required: true
+        // required: true
     },
     userUpdate: {
         type: String,
