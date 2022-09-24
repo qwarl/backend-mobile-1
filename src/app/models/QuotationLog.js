@@ -22,16 +22,16 @@ const Quotation = new Schema({
         type: String,
         // required: true
     },
-    of20gp: {
-        type: Number,
+    of20: {
+        type: String,
         // required: true
     },
-    of40gp: {
-        type: Number,
+    of40: {
+        type: String,
         // required: true
     },
-    of45gp: {
-        type: Number,
+    of45: {
+        type: String,
         // required: true
     },
     sur20: {

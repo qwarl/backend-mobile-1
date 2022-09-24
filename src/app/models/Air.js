@@ -1,73 +1,64 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const PhongLog = new Schema(
+const Air = new Schema(
   {
-    name: {
+    quotationcode:{
+      type: String,
+    },
+    dim: {
       type: String,
       // required: true
     },
-    quotationcode:{
+    grossweight: {
       type: String,
     },
     month: {
       type: String,
       // required: true
     },
-    freight: {
+    continent: {
       type: String,
       // required: true
     },
-    hsCode: {
+    aol: {
       type: String,
       // required: true
     },
-    function: {
+    aod: {
       type: String,
       // required: true
     },
-    //thu bo cmt neu gap loi nay
-    // Error: PhongLog validation failed: image: Path `image` is required.
-    image: {
-      type: String,
-      // minimize: false
-    },
-    pol: {
+    typeofcargo: {
       type: String,
       // required: true
     },
-    pod: {
+    airFreight: {
       type: String,
       // required: true
     },
-    typeProduct: {
+    sur: {
       type: String,
       // required:true,
     },
-    quantity: {
+    airlines: {
       type: String,
       // required:true,
     },
-    requirement: {
+    schedule: {
       type: String,
       // required: true
     },
-    price: {
+    transittime: {
       type: String,
       // required: true
     },
-    type: {
+    valid: {
       type: String,
       // required: true
     },
-    policy:{
-        type: String,
-    },
-    referencefee:{
-      type: String
-    },
-    note:{
-        type: String
+    note: {
+      type: String,
     },
     userCreate: {
       type: String,
@@ -82,9 +73,9 @@ const PhongLog = new Schema(
     updateAt: {
       type: String,
     },
-    year:{
-        type: String
-    }
+    year: {
+      type: String,
+    },
     // createdAt: {
     //     type: Date,
     //     default: () => new Date(+new Date() + 7 * 60 * 60 * 1000)
@@ -102,4 +93,4 @@ const PhongLog = new Schema(
   { timestamps: true, versionKey: false }
 ); //bỏ __v trong document in mongoose
 
-module.exports = mongoose.model("PhongLog", PhongLog, "PhongLog");
+module.exports = mongoose.model("Air", Air, "Air");
