@@ -33,7 +33,7 @@ class quotationsController {
             let year = getDate.getFullYear().toString().slice(-2)
             let subCode = 'BGFCL' + month + year
             var code
-            let check = month
+            let check = month;
 
             if (check = month) {
                 counter++
