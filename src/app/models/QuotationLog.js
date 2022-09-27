@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Quotation = new Schema({
+    code: {
+        type: String,
+        // required: true
+    },
     pol: {
         type: String,
         // required: true
