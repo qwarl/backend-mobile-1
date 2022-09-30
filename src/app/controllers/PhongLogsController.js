@@ -18,6 +18,39 @@ class phongLogsController {
     async create(req, res) {
         try {
             const newPhongLog = new PhongLog(req.body);
+            let newCode = await Air.findOne().sort({ _id: -1 }).limit(1)
+            // console.log(newCode.code);
+            let counter
+            if (!newCode) {
+                counter = 0
+            } else {
+                counter = newCode.code.toString().slice(-3)
+            }
+            console.log((+counter + 1).toString().length);
+            let getDate = new Date()
+            let month = getDate.getMonth() + 1
+            month = month.toString().padStart(2, '0')
+            let year = getDate.getFullYear().toString().slice(-2)
+            let subCode = 'BGLOG' + month + year
+            var code
+            let check = month
+
+            if (check = month) {
+                counter++
+                // if(counter)
+                let ait = counter.toString().padStart(3, '0')// ati =auto increment code
+                code = subCode + ait                        // if ati>1000, it will become ati=001 again, solve this by change padStart(3,'0') to padStart(4,'0')
+            }
+            else {
+                check = month
+                counter = 0
+                counter++
+                let ati = number.toString().padStart(3, '0')
+                code = subCode + ati
+            }
+            console.log(code)
+            newAir.code = code
+            console.log(newAir);
             await newPhongLog.save();
             res.status(200).json({ success: true, message: 'Create new phongLog successfully', newPhongLog });
         } catch (error) {

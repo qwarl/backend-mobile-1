@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const Air = new Schema(
   {
-    quotationcode:{
+    code: {
       type: String,
     },
     dim: {
@@ -21,6 +21,9 @@ const Air = new Schema(
       type: String,
       // required: true
     },
+    shippingtype: {
+      type: String,
+    },
     aol: {
       type: String,
       // required: true
@@ -33,7 +36,7 @@ const Air = new Schema(
       type: String,
       // required: true
     },
-    airFreight: {
+    airfreight: {
       type: String,
       // required: true
     },

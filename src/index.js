@@ -32,6 +32,6 @@ db.connect();
 
 
 app.listen(PORT, () => {
-  console.log(`Server listening at http://192.168.1.82:${PORT}/api`)
+  console.log(`Server listening at http://192.168.1.96:${PORT}/api`)
   console.log('PORT:', PORT)
 })

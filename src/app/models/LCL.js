@@ -1,36 +1,25 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const PhongLog = new Schema(
+const LCL = new Schema(
   {
-    name: {
+    code: {
+      type: String,
+    },
+    dim: {
       type: String,
       // required: true
     },
-    code:{
+    grossweight: {
       type: String,
     },
     month: {
       type: String,
       // required: true
     },
-    freight: {
+    continent: {
       type: String,
       // required: true
-    },
-    hsCode: {
-      type: String,
-      // required: true
-    },
-    function: {
-      type: String,
-      // required: true
-    },
-    //thu bo cmt neu gap loi nay
-    // Error: PhongLog validation failed: image: Path `image` is required.
-    image: {
-      type: String,
-      // minimize: false
     },
     pol: {
       type: String,
@@ -40,34 +29,36 @@ const PhongLog = new Schema(
       type: String,
       // required: true
     },
-    typeProduct: {
+    typeofcargo: {
+      type: String,
+      // required: true
+    },
+    oceanfreight: {
+      type: String,
+      // required: true
+    },
+    localcharge: {
       type: String,
       // required:true,
     },
-    quantity: {
+    carrier: {
       type: String,
       // required:true,
     },
-    requirement: {
+    schedule: {
       type: String,
       // required: true
     },
-    price: {
+    transittime: {
       type: String,
       // required: true
     },
-    type: {
+    valid: {
       type: String,
       // required: true
     },
-    policy:{
-        type: String,
-    },
-    referencefee:{
-      type: String
-    },
-    note:{
-        type: String
+    note: {
+      type: String,
     },
     userCreate: {
       type: String,
@@ -82,9 +73,9 @@ const PhongLog = new Schema(
     updateAt: {
       type: String,
     },
-    year:{
-        type: String
-    }
+    year: {
+      type: String,
+    },
     // createdAt: {
     //     type: Date,
     //     default: () => new Date(+new Date() + 7 * 60 * 60 * 1000)
@@ -102,4 +93,4 @@ const PhongLog = new Schema(
   { timestamps: true, versionKey: false }
 ); //bỏ __v trong document in mongoose
 
-module.exports = mongoose.model("PhongLog", PhongLog, "PhongLog");
+module.exports = mongoose.model("LCL", LCL, "LCL");
