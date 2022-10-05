@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const DomSeaCY = new Schema(
+const DomSeaDoor = new Schema(
   {
     code: {
       type: String,
@@ -15,6 +15,9 @@ const DomSeaCY = new Schema(
       // required: true
     },
     container: {
+      type: String,
+    },
+    doortype:{
       type: String,
     },
     productname: {
@@ -38,6 +41,14 @@ const DomSeaCY = new Schema(
       // required: true
     },
     pod: {
+      type: String,
+      // required: true
+    },
+    addresspacking: {
+      type: String,
+      // required: true
+    },
+    addressdelivery: {
       type: String,
       // required: true
     },
@@ -74,4 +85,4 @@ const DomSeaCY = new Schema(
   { timestamps: true, versionKey: false }
 ); //bỏ __v trong document in mongoose
 
-module.exports = mongoose.model("DomSeaCY", DomSeaCY, "DomSeaCY");
+module.exports = mongoose.model("DomSeaDoor", DomSeaDoor, "DomSeaDoor");

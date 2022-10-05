@@ -18,7 +18,7 @@ class phongLogsController {
     async create(req, res) {
         try {
             const newPhongLog = new PhongLog(req.body);
-            let newCode = await Air.findOne().sort({ _id: -1 }).limit(1)
+            let newCode = await PhongLog.findOne().sort({ _id: -1 }).limit(1)
             // console.log(newCode.code);
             let counter
             if (!newCode) {
@@ -49,8 +49,8 @@ class phongLogsController {
                 code = subCode + ati
             }
             console.log(code)
-            newAir.code = code
-            console.log(newAir);
+            newPhongLog.code = code
+            console.log(newPhongLog);
             await newPhongLog.save();
             res.status(200).json({ success: true, message: 'Create new phongLog successfully', newPhongLog });
         } catch (error) {

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const domSeaCyController = require('../../app/controllers/DOM/DomSeaCYController')
+const domSeaCyController = require('../../../app/controllers/DOM/Sea/DomSeaCYController')
 
 router.get('/getAll', domSeaCyController.getAll);
 router.post('/create', domSeaCyController.create);

@@ -1,25 +1,24 @@
-const DomSeaCy = require('../../models/DOM/DomSeaCY')
+const DomSeaDoor = require('../../../models/DOM/Sea/DomSeaDoor')
 
-class DomSeaCyController {
+class DomSeaDoorController {
 
-    //[GET] /truck/getAll
+    //[GET] /SeaDoor/getAll
     async getAll(req, res) {
         try {
-            const seaCy = await DomSeaCy.find({});
-            res.status(200).json({ success: true, message: 'Get all dom sea cy successfully', seaCy });
-            // console.log('Get all dom truck successfully');
+            const seaDoor = await DomSeaDoor.find({});
+            res.status(200).json({ success: true, message: 'Get all dom sea door successfully', seaDoor });
         } catch (error) {
             console.log(error)
             res.status(400).json({ success: false, message: 'Get failed' })
         }
     }
 
-    //[POST] /truck/create
+    //[POST] /SeaDoor/create
     async create(req, res) {
         try {
-            const newSeaCy = new DomSeaCy(req.body);
+            const newSeaDoor = new DomSeaDoor(req.body);
 
-            let newCode = await DomSeaCy.findOne().sort({ _id: -1 }).limit(1)
+            let newCode = await DomSeaDoor.findOne().sort({ _id: -1 }).limit(1)
             // console.log(newCode.code);
             let counter
             if (!newCode) {
@@ -50,21 +49,21 @@ class DomSeaCyController {
                 code = subCode + ati
             }
             console.log(code)
-            newSeaCy.code = code
-            console.log(newSeaCy);
-            await newSeaCy.save();
-            res.status(200).json({ success: true, message: 'Create new Sea Cy successfully', newSeaCy });
+            newSeaDoor.code = code
+            console.log(newSeaDoor);
+            await newSeaDoor.save();
+            res.status(200).json({ success: true, message: 'Create new Sea Door successfully', newSeaDoor });
         } catch (error) {
             console.log(error)
             res.status(400).json({ success: false, message: 'Create failed' })
         }
     }
 
-    //[POST] /air/update
+    //[POST] /SeaDoor/update
     async update(req, res) {
         try {
-            const updateSeaCy = await DomSeaCy.findByIdAndUpdate(req.params._id, req.body, { new: true });
-            res.status(200).json({ success: true, message: 'Update truck successfully', updateSeaCy });
+            const updateSeaDoor = await DomSeaDoor.findByIdAndUpdate(req.params._id, req.body, { new: true });
+            res.status(200).json({ success: true, message: 'Update Sea Door successfully', updateSeaDoor });
             console.log('Update truck successfully');
         } catch (error) {
             console.log(error)
@@ -78,14 +77,14 @@ class DomSeaCyController {
         try {
             const { pol, pod, month, continent } = req.query;
 
-            if (addressdelivery && month && continent) {
-                const seaCy = await DomSeaCy.find({ $and: [{ pol: pol }, { month: month }, { continent: continent }] });
-                return res.status(200).json({ success: true, message: 'Search Sea Cy successfully', seaCy });
+            if (pol && month && continent) {
+                const seaDoor = await DomSeaDoor.find({ $and: [{ pol: pol }, { month: month }, { continent: continent }] });
+                return res.status(200).json({ success: true, message: 'Search Sea Door successfully', seaDoor });
                 console.log('Search truck successfully')
             }
-            if (addressreceive && month && continent) {
-                const seaCy = await DomSeaCy.find({ $and: [{ pod: pod }, { month: month }, { continent: continent }] });
-                return res.status(200).json({ success: true, message: 'Search Sea Cy successfully', seaCy });
+            if (pod && month && continent) {
+                const seaDoor = await DomSeaDoor.find({ $and: [{ pod: pod }, { month: month }, { continent: continent }] });
+                return res.status(200).json({ success: true, message: 'Search Sea Door successfully', seaDoor });
                 console.log('Search truck successfully')
             }
 
@@ -96,4 +95,4 @@ class DomSeaCyController {
     }
 }
 
-module.exports = new DomSeaCyController
+module.exports = new DomSeaDoorController
