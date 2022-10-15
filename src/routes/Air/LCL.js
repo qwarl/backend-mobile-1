@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const lclController = require('../app/controllers/LCLController')
+const lclController = require('../../app/controllers/Air/LCLController')
 
 router.get('/getAll', lclController.getAll);
 router.post('/create', lclController.create);

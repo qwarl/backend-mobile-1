@@ -1,12 +1,12 @@
-const Air = require('../models/Air')
+const LCL = require('../../models/Air/LCL')
 
-class AirController {
+class LCLController {
 
     //[GET] /air/getAll
     async getAll(req, res) {
         try {
-            const air = await Air.find({});
-            res.status(200).json({ success: true, message: 'Get all air successfully', air });
+            const lcl = await LCL.find({});
+            res.status(200).json({ success: true, message: 'Get all air successfully', lcl });
             // console.log('Get all air successfully');
         } catch (error) {
             console.log(error)
@@ -17,9 +17,9 @@ class AirController {
     //[POST] /air/create
     async create(req, res) {
         try {
-            const newAir = new Air(req.body);
+            const newLCL = new LCL(req.body);
 
-            let newCode = await Air.findOne().sort({ _id: -1 }).limit(1)
+            let newCode = await LCL.findOne().sort({ _id: -1 }).limit(1)
             // console.log(newCode.code);
             let counter
             if (!newCode) {
@@ -32,7 +32,7 @@ class AirController {
             let month = getDate.getMonth() + 1
             month = month.toString().padStart(2, '0')
             let year = getDate.getFullYear().toString().slice(-2)
-            let subCode = 'BGAIR' + month + year
+            let subCode = 'BGLCL'+ year + month ;
             var code
             let check = month
 
@@ -50,10 +50,10 @@ class AirController {
                 code = subCode + ati
             }
             console.log(code)
-            newAir.code = code
-            console.log(newAir);
-            await newAir.save();
-            res.status(200).json({ success: true, message: 'Create new air successfully', newAir });
+            newLCL.code = code
+            console.log(newLCL);
+            await newLCL.save();
+            res.status(200).json({ success: true, message: 'Create new air successfully', newLCL });
         } catch (error) {
             console.log(error)
             res.status(400).json({ success: false, message: 'Create failed' })
@@ -63,8 +63,8 @@ class AirController {
     //[POST] /air/update
     async update(req, res) {
         try {
-            const updateAir = await Air.findByIdAndUpdate(req.params._id, req.body, { new: true });
-            res.status(200).json({ success: true, message: 'Update air successfully', updateAir });
+            const updateLCL = await LCL.findByIdAndUpdate(req.params._id, req.body, { new: true });
+            res.status(200).json({ success: true, message: 'Update air successfully', updateLCL });
             console.log('Update air successfully');
         } catch (error) {
             console.log(error)
@@ -76,16 +76,16 @@ class AirController {
     //[GET] /air/search
     async search(req, res) {
         try {
-            const { aol, aod, month, continent } = req.query;
+            const { pol, pod, month, continent } = req.query;
 
             if (aol && month && continent) {
-                const airs = await Air.find({ $and: [{ aol: aol }, { month: month }, { continent: continent }] });
-                return res.status(200).json({ success: true, message: 'Search air successfully', airs });
+                const lcls = await LCL.find({ $and: [{ pol: pol }, { month: month }, { continent: continent }] });
+                return res.status(200).json({ success: true, message: 'Search air successfully', lcls });
                 console.log('Search air successfully')
             }
             if (aod && month && continent) {
-                const airs = await Air.find({ $and: [{ aod: aod }, { month: month }, { continent: continent }] });
-                return res.status(200).json({ success: true, message: 'Search air successfully', airs });
+                const lcls = await LCL.find({ $and: [{ pod: pod }, { month: month }, { continent: continent }] });
+                return res.status(200).json({ success: true, message: 'Search air successfully', lcls });
                 console.log('Search air successfully')
             }
 
@@ -96,4 +96,4 @@ class AirController {
     }
 }
 
-module.exports = new AirController
+module.exports = new LCLController
