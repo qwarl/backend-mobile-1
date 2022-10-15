@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const quotationsController = require('../app/controllers/QuotationsController');
+const quotationsController = require('../../app/controllers/Fcl/QuotationsController');
 
 router.get('/getAll', quotationsController.getAll);
 router.post('/create', quotationsController.create);

@@ -1,30 +1,29 @@
-const DomTruck = require("../../models/DOM/DomTruck");
+const PhongLog = require("../../models/LogDeparment/PhongLog");
 
-class DomTruckController {
-  //[GET] /truck/getAll
+class phongLogsController {
+  //[GET] /phongLogs/getAll
   async getAll(req, res) {
     try {
-      const truck = await DomTruck.find({});
+      const phongLogs = await PhongLog.find({});
       res
         .status(200)
         .json({
           success: true,
-          message: "Get all dom truck successfully",
-          truck,
+          message: "Get all phong log successfully",
+          phongLogs,
         });
-      // console.log('Get all dom truck successfully');
+      console.log("Get all phong log successfully");
     } catch (error) {
       console.log(error);
       res.status(400).json({ success: false, message: "Get failed" });
     }
   }
 
-  //[POST] /truck/create
+  //[POST] /phongLogs/create
   async create(req, res) {
     try {
-      const newTruck = new DomTruck(req.body);
-
-      let newCode = await DomTruck.findOne().sort({ _id: -1 }).limit(1);
+      const newPhongLog = new PhongLog(req.body);
+      let newCode = await PhongLog.findOne().sort({ _id: -1 }).limit(1);
       // console.log(newCode.code);
       let counter;
       if (!newCode) {
@@ -37,7 +36,7 @@ class DomTruckController {
       let month = getDate.getMonth() + 1;
       month = month.toString().padStart(2, "0");
       let year = getDate.getFullYear().toString().slice(-2);
-      let subCode = "BGDOM" + year + month;
+      let subCode = "BGLOG" + year + month;
       var code;
       let check = month;
 
@@ -54,15 +53,15 @@ class DomTruckController {
         code = subCode + ati;
       }
       console.log(code);
-      newTruck.code = code;
-      console.log(newTruck);
-      await newTruck.save();
+      newPhongLog.code = code;
+      console.log(newPhongLog);
+      await newPhongLog.save();
       res
         .status(200)
         .json({
           success: true,
-          message: "Create new truck successfully",
-          newTruck,
+          message: "Create new phongLog successfully",
+          newPhongLog,
         });
     } catch (error) {
       console.log(error);
@@ -70,10 +69,10 @@ class DomTruckController {
     }
   }
 
-  //[POST] /air/update
+  //[POST] /phongLogs/update
   async update(req, res) {
     try {
-      const updateTruck = await DomTruck.findByIdAndUpdate(
+      const updatePhongLog = await PhongLog.findByIdAndUpdate(
         req.params._id,
         req.body,
         { new: true }
@@ -82,54 +81,49 @@ class DomTruckController {
         .status(200)
         .json({
           success: true,
-          message: "Update truck successfully",
-          updateTruck,
+          message: "Update phong log successfully",
+          updatePhongLog,
         });
-      console.log("Update truck successfully");
+      console.log("Update phong log successfully");
     } catch (error) {
       console.log(error);
       res.status(400).json({ success: false, message: "Update failed" });
     }
   }
 
-  //[GET] /air/search
+  //[GET] /phongLogs/search
   async search(req, res) {
     try {
-      const { addressdelivery, addressreceive, month, continent } = req.query;
+      const { pol, pod, month, freight } = req.query;
+      // console.log(pol, pod, type, month, continent);
 
-      if (addressdelivery && month && continent) {
-        const trucks = await DomTruck.find({
-          $and: [
-            { addressdelivery: addressdelivery },
-            { month: month },
-            { continent: continent },
-          ],
+      //code sua
+
+      if (pol && month && freight) {
+        const phongLogs = await PhongLog.find({
+          $and: [{ pol: pol }, { month: month }, { freight: freight }],
         });
         return res
           .status(200)
           .json({
             success: true,
-            message: "Search truck successfully",
-            trucks,
+            message: "Search phong log successfully",
+            phongLogs,
           });
-        console.log("Search truck successfully");
+        console.log("Search phong log successfully");
       }
-      if (addressreceive && month && continent) {
-        const trucks = await DomTruck.find({
-          $and: [
-            { addressreceive: addressreceive },
-            { month: month },
-            { continent: continent },
-          ],
+      if (pod && month && freight) {
+        const phongLogs = await PhongLog.find({
+          $and: [{ pod: pod }, { month: month }, { freight: freight }],
         });
         return res
           .status(200)
           .json({
             success: true,
-            message: "Search truck successfully",
-            trucks,
+            message: "Search phong log successfully",
+            phongLogs,
           });
-        console.log("Search truck successfully");
+        console.log("Search phong log successfully");
       }
     } catch (error) {
       console.log(error);
@@ -138,4 +132,4 @@ class DomTruckController {
   }
 }
 
-module.exports = new DomTruckController();
+module.exports = new phongLogsController();

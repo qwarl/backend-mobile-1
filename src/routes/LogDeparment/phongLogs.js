@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const phongLogsController = require('../app/controllers/PhongLogsController')
+const phongLogsController = require('../../app/controllers/LogDeparment/PhongLogsController')
 
 router.get('/getAll', phongLogsController.getAll);
 router.post('/create', phongLogsController.create);

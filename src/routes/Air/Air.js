@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const airController = require('../app/controllers/AirController')
+const airController = require('../../app/controllers/Air/AirController')
 
 router.get('/getAll', airController.getAll);
 router.post('/create', airController.create);
