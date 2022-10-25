@@ -36,7 +36,7 @@ class ImportLCLController {
       let month = getDate.getMonth() + 1;
       month = month.toString().padStart(2, "0");
       let year = getDate.getFullYear().toString().slice(-2);
-      let subCode = "BGImportLCL" + year + month;
+      let subCode = "BGIMPORTLCL" + year + month;
       var code;
       let check = month;
 

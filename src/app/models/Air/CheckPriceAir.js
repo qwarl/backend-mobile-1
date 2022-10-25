@@ -1,9 +1,16 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const DomSeaCY = new Schema(
+const CheckPriceAir = new Schema(
   {
     code: {
+      type: String,
+    },
+    dim: {
+      type: String,
+      // required: true
+    },
+    grossweight: {
       type: String,
     },
     month: {
@@ -14,35 +21,47 @@ const DomSeaCY = new Schema(
       type: String,
       // required: true
     },
-    container: {
+    shippingtype: {
       type: String,
     },
-    cytype: {
-      type: String,
-    },
-    productname: {
+    aol: {
       type: String,
       // required: true
     },
-    weight: {
+    aod: {
       type: String,
       // required: true
     },
-    quantitycont: {
+    typeofcargo: {
+      type: String,
+      // required: true
+    },
+    airfreight: {
+      type: String,
+      // required: true
+    },
+    sur: {
       type: String,
       // required:true,
     },
-    etd: {
+    airlines: {
       type: String,
       // required:true,
     },
-    pol: {
+    schedule: {
       type: String,
       // required: true
     },
-    pod: {
+    transittime: {
       type: String,
       // required: true
+    },
+    valid: {
+      type: String,
+      // required: true
+    },
+    note: {
+      type: String,
     },
     userCreate: {
       type: String,
@@ -60,21 +79,12 @@ const DomSeaCY = new Schema(
     year: {
       type: String,
     },
-    // createdAt: {
-    //     type: Date,
-    //     default: () => new Date(+new Date() + 7 * 60 * 60 * 1000)
-    // },
-    // // convert UTC time to local time, MongoDB stores times in UTC by default,
-    // // and converts any local time representations into this form.
-    // // detail in https://stackoverflow.com/questions/29899208/mongoose-date-field-set-default-to-date-now-n-days
-
-    // updatedAt: {
-    //     type: Date,
-    //     default: () => new Date(+new Date() + 7 * 60 * 60 * 1000)
-    // }
-    // neu co van de trong viec hien gio khong giong voi dong ho thi thu bo cmt 60-71 xem
   },
   { timestamps: true, versionKey: false }
 ); //bỏ __v trong document in mongoose
 
-module.exports = mongoose.model("DomSeaCY", DomSeaCY, "DomSeaCY");
+module.exports = mongoose.model(
+  "CheckPriceAir",
+  CheckPriceAir,
+  "CheckPriceAir"
+);

@@ -1,9 +1,16 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const DomSeaCY = new Schema(
+const CheckPriceAirLCL = new Schema(
   {
     code: {
+      type: String,
+    },
+    dim: {
+      type: String,
+      // required: true
+    },
+    grossweight: {
       type: String,
     },
     month: {
@@ -14,28 +21,6 @@ const DomSeaCY = new Schema(
       type: String,
       // required: true
     },
-    container: {
-      type: String,
-    },
-    cytype: {
-      type: String,
-    },
-    productname: {
-      type: String,
-      // required: true
-    },
-    weight: {
-      type: String,
-      // required: true
-    },
-    quantitycont: {
-      type: String,
-      // required:true,
-    },
-    etd: {
-      type: String,
-      // required:true,
-    },
     pol: {
       type: String,
       // required: true
@@ -43,6 +28,37 @@ const DomSeaCY = new Schema(
     pod: {
       type: String,
       // required: true
+    },
+    typeofcargo: {
+      type: String,
+      // required: true
+    },
+    oceanfreight: {
+      type: String,
+      // required: true
+    },
+    localcharge: {
+      type: String,
+      // required:true,
+    },
+    carrier: {
+      type: String,
+      // required:true,
+    },
+    schedule: {
+      type: String,
+      // required: true
+    },
+    transittime: {
+      type: String,
+      // required: true
+    },
+    valid: {
+      type: String,
+      // required: true
+    },
+    note: {
+      type: String,
     },
     userCreate: {
       type: String,
@@ -77,4 +93,8 @@ const DomSeaCY = new Schema(
   { timestamps: true, versionKey: false }
 ); //bỏ __v trong document in mongoose
 
-module.exports = mongoose.model("DomSeaCY", DomSeaCY, "DomSeaCY");
+module.exports = mongoose.model(
+  "CheckPriceAirLCL",
+  CheckPriceAirLCL,
+  "CheckPriceAirLCL"
+);

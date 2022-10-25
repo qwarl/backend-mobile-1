@@ -1,40 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const DomSeaCY = new Schema(
+const ImportCheckPrice = new Schema(
   {
     code: {
       type: String,
-    },
-    month: {
-      type: String,
       // required: true
-    },
-    continent: {
-      type: String,
-      // required: true
-    },
-    container: {
-      type: String,
-    },
-    cytype: {
-      type: String,
-    },
-    productname: {
-      type: String,
-      // required: true
-    },
-    weight: {
-      type: String,
-      // required: true
-    },
-    quantitycont: {
-      type: String,
-      // required:true,
-    },
-    etd: {
-      type: String,
-      // required:true,
     },
     pol: {
       type: String,
@@ -44,20 +15,71 @@ const DomSeaCY = new Schema(
       type: String,
       // required: true
     },
+    month: {
+      type: String,
+      // required:true,
+    },
+    continent: {
+      type: String,
+      // required:true,
+    },
+    container: {
+      type: String,
+      // required: true
+    },
+    of20: {
+      type: String,
+      // required: true
+    },
+    of40: {
+      type: String,
+      // required: true
+    },
+    of45: {
+      type: String,
+      // required: true
+    },
+    sur20: {
+      type: String,
+      // required: true
+    },
+    sur40: {
+      type: String,
+      // required: true
+    },
+    sur45: {
+      type: String,
+      // required: true
+    },
+    totalfreight: {
+      type: String,
+      // required: true
+    },
+    carrier: {
+      type: String,
+      // required: true
+    },
+    schedule: {
+      type: String,
+      // required: true
+    },
+    transittime: {
+      type: String,
+      // required: true
+    },
+    valid: {
+      type: String,
+      // required: true
+    },
+    notes: {
+      type: String,
+      // required: true
+    },
     userCreate: {
       type: String,
       // required: true
     },
     userUpdate: {
-      type: String,
-    },
-    creacteAt: {
-      type: String,
-    },
-    updateAt: {
-      type: String,
-    },
-    year: {
       type: String,
     },
     // createdAt: {
@@ -77,4 +99,8 @@ const DomSeaCY = new Schema(
   { timestamps: true, versionKey: false }
 ); //bỏ __v trong document in mongoose
 
-module.exports = mongoose.model("DomSeaCY", DomSeaCY, "DomSeaCY");
+module.exports = mongoose.model(
+  "ImportCheckPrice",
+  ImportCheckPrice,
+  "ImportCheckPrice"
+);

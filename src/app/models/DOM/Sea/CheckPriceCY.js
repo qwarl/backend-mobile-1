@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const DomSeaCY = new Schema(
+const CheckPriceCY = new Schema(
   {
     code: {
       type: String,
@@ -77,4 +77,4 @@ const DomSeaCY = new Schema(
   { timestamps: true, versionKey: false }
 ); //bỏ __v trong document in mongoose
 
-module.exports = mongoose.model("DomSeaCY", DomSeaCY, "DomSeaCY");
+module.exports = mongoose.model("CheckPriceCY", CheckPriceCY, "CheckPriceCY");
