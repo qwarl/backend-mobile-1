@@ -1,54 +1,40 @@
-const PhongLog = require("../../models/LogDeparment/LogCheckPrice");
+const Booking = require("../../models/LogDeparment/Booking");
 
-class LogCheckPriceController {
-  //[GET] /phongLogs/getAll
+class BookingLogController {
+  //[GET] /Bookings/getAll
   async getAll(req, res) {
     try {
-      const checkPrice = await PhongLog.find({});
+      const bookingLog = await Booking.find({});
       res.status(200).json({
         success: true,
-        message: "Get all phong log successfully",
-        checkPrice,
+        message: "Get all booking log successfully",
+        bookingLog,
       });
+      console.log("Get all booking log successfully");
     } catch (error) {
       console.log(error);
       res.status(400).json({ success: false, message: "Get failed" });
     }
   }
 
-  async deleteLog(req, res) {
-    try {
-      const id = await PhongLog.findByIdAndDelete(req.params._id);
-      res.status(200).json({
-        success: true,
-        message: "delete log successfully",
-        id,
-      });
-      console.log("delete log successfully");
-    } catch (error) {
-      console.log(error);
-      res.status(400).json({ success: false, message: "delete failed" });
-    }
-  }
-
-  //[POST] /phongLogs/create
+  //[POST] /Bookings/create
   async create(req, res) {
     try {
-      const newPhongLog = new PhongLog(req.body);
-      let newCode = await PhongLog.findOne().sort({ _id: -1 }).limit(1);
+      const newBooking = new Booking(req.body);
+      let newCode = await Booking.findOne().sort({ _id: -1 }).limit(1);
       // console.log(newCode.code);
       let counter;
       if (!newCode) {
         counter = 0;
       } else {
-        counter = newCode.code.toString().slice(-3);
+        counter = newCode.idfile.toString().slice(-3);
       }
       console.log((+counter + 1).toString().length);
       let getDate = new Date();
       let month = getDate.getMonth() + 1;
       month = month.toString().padStart(2, "0");
       let year = getDate.getFullYear().toString().slice(-2);
-      let subCode = "BGLOG" + year + month;
+      let subCode = "FLHCM" + year + month;
       var code;
       let check = month;
 
@@ -65,13 +51,13 @@ class LogCheckPriceController {
         code = subCode + ati;
       }
       console.log(code);
-      newPhongLog.code = code;
-      console.log(newPhongLog);
-      await newPhongLog.save();
+      newBooking.idfile = code;
+      console.log(newBooking);
+      await newBooking.save();
       res.status(200).json({
         success: true,
-        message: "Create new phongLog successfully",
-        newPhongLog,
+        message: "Create new Booking successfully",
+        newBooking,
       });
     } catch (error) {
       console.log(error);
@@ -79,10 +65,10 @@ class LogCheckPriceController {
     }
   }
 
-  //[POST] /phongLogs/update
+  //[POST] /Bookings/update
   async update(req, res) {
     try {
-      const updatePhongLog = await PhongLog.findByIdAndUpdate(
+      const updateBooking = await Booking.findByIdAndUpdate(
         req.params._id,
         req.body,
         { new: true }
@@ -90,7 +76,7 @@ class LogCheckPriceController {
       res.status(200).json({
         success: true,
         message: "Update phong log successfully",
-        updatePhongLog,
+        updateBooking,
       });
       console.log("Update phong log successfully");
     } catch (error) {
@@ -99,7 +85,7 @@ class LogCheckPriceController {
     }
   }
 
-  //[GET] /phongLogs/search
+  //[GET] /Bookings/search
   async search(req, res) {
     try {
       const { pol, pod, month, freight } = req.query;
@@ -108,24 +94,24 @@ class LogCheckPriceController {
       //code sua
 
       if (pol && month && freight) {
-        const phongLogs = await PhongLog.find({
+        const Bookings = await Booking.find({
           $and: [{ pol: pol }, { month: month }, { freight: freight }],
         });
         return res.status(200).json({
           success: true,
           message: "Search phong log successfully",
-          phongLogs,
+          Bookings,
         });
         console.log("Search phong log successfully");
       }
       if (pod && month && freight) {
-        const phongLogs = await PhongLog.find({
+        const Bookings = await Booking.find({
           $and: [{ pod: pod }, { month: month }, { freight: freight }],
         });
         return res.status(200).json({
           success: true,
           message: "Search phong log successfully",
-          phongLogs,
+          Bookings,
         });
         console.log("Search phong log successfully");
       }
@@ -136,4 +122,4 @@ class LogCheckPriceController {
   }
 }
 
-module.exports = new LogCheckPriceController();
+module.exports = new BookingLogController();

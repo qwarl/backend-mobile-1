@@ -1,15 +1,16 @@
-const Quotation = require("../../models/FCL/QuotationLog");
+const Quotation = require("../../models/FCL/CheckPriceFCL");
 
-class quotationsController {
+class CheckPriceFCLController {
   //[GET] /quotations/getAll
   async getAll(req, res) {
     try {
-      const quotations = await Quotation.find({});
+      const checkPriceFCL = await Quotation.find({});
       res.status(200).json({
         success: true,
         message: "Get all quotation successfully",
-        quotations,
+        checkPriceFCL,
       });
+      console.log("Get all quotation successfully");
     } catch (error) {
       console.log(error);
       res.status(400).json({ success: false, message: "Get failed" });
@@ -61,6 +62,21 @@ class quotationsController {
     } catch (error) {
       console.log(error);
       res.status(400).json({ success: false, message: "Create failed" });
+    }
+  }
+
+  async deleteFCL(req, res) {
+    try {
+      const id = await Quotation.findByIdAndDelete(req.params._id);
+      res.status(200).json({
+        success: true,
+        message: "delete FCL successfully",
+        id,
+      });
+      console.log("delete FCL successfully");
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({ success: false, message: "delete failed" });
     }
   }
 
@@ -215,4 +231,4 @@ class quotationsController {
   }
 }
 
-module.exports = new quotationsController();
+module.exports = new CheckPriceFCLController();

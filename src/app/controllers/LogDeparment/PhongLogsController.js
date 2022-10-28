@@ -5,14 +5,11 @@ class phongLogsController {
   async getAll(req, res) {
     try {
       const phongLogs = await PhongLog.find({});
-      res
-        .status(200)
-        .json({
-          success: true,
-          message: "Get all phong log successfully",
-          phongLogs,
-        });
-      console.log("Get all phong log successfully");
+      res.status(200).json({
+        success: true,
+        message: "Get all phong log successfully",
+        phongLogs,
+      });
     } catch (error) {
       console.log(error);
       res.status(400).json({ success: false, message: "Get failed" });
@@ -56,13 +53,11 @@ class phongLogsController {
       newPhongLog.code = code;
       console.log(newPhongLog);
       await newPhongLog.save();
-      res
-        .status(200)
-        .json({
-          success: true,
-          message: "Create new phongLog successfully",
-          newPhongLog,
-        });
+      res.status(200).json({
+        success: true,
+        message: "Create new phongLog successfully",
+        newPhongLog,
+      });
     } catch (error) {
       console.log(error);
       res.status(400).json({ success: false, message: "Create failed" });
@@ -77,13 +72,11 @@ class phongLogsController {
         req.body,
         { new: true }
       );
-      res
-        .status(200)
-        .json({
-          success: true,
-          message: "Update phong log successfully",
-          updatePhongLog,
-        });
+      res.status(200).json({
+        success: true,
+        message: "Update phong log successfully",
+        updatePhongLog,
+      });
       console.log("Update phong log successfully");
     } catch (error) {
       console.log(error);
@@ -103,26 +96,22 @@ class phongLogsController {
         const phongLogs = await PhongLog.find({
           $and: [{ pol: pol }, { month: month }, { freight: freight }],
         });
-        return res
-          .status(200)
-          .json({
-            success: true,
-            message: "Search phong log successfully",
-            phongLogs,
-          });
+        return res.status(200).json({
+          success: true,
+          message: "Search phong log successfully",
+          phongLogs,
+        });
         console.log("Search phong log successfully");
       }
       if (pod && month && freight) {
         const phongLogs = await PhongLog.find({
           $and: [{ pod: pod }, { month: month }, { freight: freight }],
         });
-        return res
-          .status(200)
-          .json({
-            success: true,
-            message: "Search phong log successfully",
-            phongLogs,
-          });
+        return res.status(200).json({
+          success: true,
+          message: "Search phong log successfully",
+          phongLogs,
+        });
         console.log("Search phong log successfully");
       }
     } catch (error) {
