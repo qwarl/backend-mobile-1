@@ -10,7 +10,7 @@ const server = http.createServer(app);
 
 // require('dotenv').config() //load env
 require("dotenv").config({ path: __dirname + "/.env" }); // maybe not work
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001
 
 app.use(express.static(path.join(__dirname, "public")));
 
