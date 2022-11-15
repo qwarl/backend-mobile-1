@@ -3,12 +3,14 @@ const app = express();
 const path = require("path");
 const http = require("http");
 const server = http.createServer(app);
+const dotenv = require('dotenv')
+
+dotenv.config()
 
 //cors config
 // var cors = require('cors')
 // app.use(cors())
 
-// require('dotenv').config() //load env
 require("dotenv").config({ path: __dirname + "/.env" }); // maybe not work
 const PORT = process.env.PORT || 3001
 
@@ -28,6 +30,6 @@ const db = require("./config/db/index");
 db.connect();
 
 app.listen(PORT, () => {
-  console.log(`Server listening at http://192.168.1.95:${PORT}/api`);
+  console.log(`Server listening at http://localhost:${PORT}/api`);
   console.log("PORT:", PORT);
 });
