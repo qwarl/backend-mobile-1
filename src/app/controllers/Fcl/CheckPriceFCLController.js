@@ -10,7 +10,6 @@ class CheckPriceFCLController {
         message: "Get all quotation successfully",
         checkPriceFCL,
       });
-      console.log("Get all quotation successfully");
     } catch (error) {
       console.log(error);
       res.status(400).json({ success: false, message: "Get failed" });

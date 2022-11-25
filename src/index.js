@@ -28,6 +28,6 @@ const db = require("./config/db/index");
 db.connect();
 
 app.listen(PORT, () => {
-  console.log(`Server listening at http://192.168.1.95:${PORT}/api`);
+  console.log(`Server listening at http://192.168.1.106:${PORT}/api`);
   console.log("PORT:", PORT);
 });

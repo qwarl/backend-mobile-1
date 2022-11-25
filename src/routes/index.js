@@ -17,6 +17,9 @@ const LogCheckPrice = require("./LogDeparment/LogCheckPrice");
 const CheckPriceAirLCL = require("./Air/CheckPriceAirLCL");
 const BookingLog = require("./LogDeparment/BookingLog");
 const CheckPriceFCL = require("./Fcl/CheckPriceFCL");
+const ItemAdvance = require("./LogDeparment/ItemAdvance");
+const AdvanceOPS = require("./LogDeparment/AdvanceOPS");
+const Test = require("./LogDeparment/Test");
 
 function route(app) {
   app.use("/api/quotations", quotationsRoute);
@@ -38,6 +41,9 @@ function route(app) {
   app.use("/api/cy-check", CheckPriceCy);
   app.use("/api/booking-log", BookingLog);
   app.use("/api/fcl-check", CheckPriceFCL);
+  app.use("/api/itemAdvance", ItemAdvance);
+  app.use("/api/advance-ops", AdvanceOPS);
+  app.use("/api/test", Test);
 }
 
 module.exports = route;

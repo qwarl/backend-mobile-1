@@ -112,6 +112,9 @@ const Booking = new Schema(
     docs: {
       type: String,
     },
+    ops: {
+      type: String,
+    },
     note: {
       type: String,
     },
