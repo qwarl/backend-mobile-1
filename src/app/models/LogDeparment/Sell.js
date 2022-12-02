@@ -4,14 +4,6 @@ const { Schema } = mongoose;
 
 const Sell = new Schema(
   {
-    info: {
-      type: Schema.Types.ObjectId,
-      ref: 'Booking',
-    },
-    reportFileId: {
-      type: Schema.Types.ObjectId,
-      ref: 'ReportLog',
-    },
     typeOfFee: {
       type: String,
     },
