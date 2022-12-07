@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-const { Schema } = mongoose;
+const { Schema } = mongoose
 
 const ReportLog = new Schema(
   {
@@ -8,21 +8,59 @@ const ReportLog = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Booking',
     },
-    sellReport: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Sell',
-    }],
-    // sellReport: {
-    //   type: Array,
-    // },
-    buyReport: {
-      type: Array,
+    sellReport: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Sell',
+      },
+    ],
+    totalSell: {
+      type: String,
+      // default: 0,
+    },
+    totalSellVAT: {
+      type: String,
+      // default: 0,
+    },
+    totalSellVND: {
+      type: String,
+      // default: 0,
+    },
+    buyReport: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'BuyItemLog',
+      },
+    ],
+    totalBuy: {
+      type: Number,
+    },
+    totalBuyVAT: {
+      type: Number,
+    },
+    paidOnBehalfOfReport: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'PaidOn',
+      },
+    ],
+    totalPaidOnBehalfOf: {
+      type: Number,
+    },
+    exchangeRate: {
+      type: Number,
+    },
+    profitVND:{
+      type: Number,
+    },
+    profitUSD:{
+      type: Number,
     },
   },
   {
     timestamps: true,
     versionKey: false,
   },
-);
+)
 
-module.exports = mongoose.model('ReportLog', ReportLog, 'ReportLog');
+module.exports = mongoose.model('ReportLog', ReportLog, 'ReportLog')

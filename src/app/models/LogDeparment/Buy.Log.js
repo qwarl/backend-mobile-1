@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-const { Schema } = mongoose;
+const { Schema } = mongoose
 
-const Sell = new Schema(
+const BuyItemLog = new Schema(
   {
     typeOfFee: {
       type: String,
@@ -32,14 +32,16 @@ const Sell = new Schema(
       // type: Number,
       type: Number,
     },
-    approximatelyToVnd: { // if there US or EUR
-      // actualPayment * exchangeRate
-      type: Number,
+    paymentFor: {
+      type: String,
     },
-    note: {
+    paidBy: {
       type: String,
     },
     invoiceNumber: {
+      type: String,
+    },
+    note: {
       type: String,
     },
   },
@@ -47,6 +49,6 @@ const Sell = new Schema(
     timestamps: true,
     versionKey: false,
   },
-);
+)
 
-module.exports = mongoose.model('Sell', Sell, 'Sell');
+module.exports = mongoose.model('BuyItemLog', BuyItemLog, 'BuyItemLog')
