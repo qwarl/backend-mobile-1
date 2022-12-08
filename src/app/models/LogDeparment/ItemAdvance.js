@@ -6,7 +6,7 @@ const ItemAdvance = new Schema(
     money: {
       type: String,
     },
-    usename: {
+    username: {
       type: String,
     },
     reason: {

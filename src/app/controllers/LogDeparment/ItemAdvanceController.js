@@ -27,7 +27,7 @@ class ItemAdvanceLogController {
         message: "Get all ItemAdvance log successfully",
         itemAdvance,
       });
-      console.log("Get all ItemAdvance log successfully");
+      // console.log("Get all ItemAdvance log successfully");
     } catch (error) {
       console.log(error);
       res.status(400).json({ success: false, message: "Get failed" });
@@ -79,6 +79,21 @@ class ItemAdvanceLogController {
     } catch (error) {
       console.log(error);
       res.status(400).json({ success: false, message: "Create failed" });
+    }
+  }
+
+  async deleteItemAdvance(req, res) {
+    try {
+      const id = await ItemAdvance.findByIdAndDelete(req.params._id);
+      res.status(200).json({
+        success: true,
+        message: "delete item advance successfully",
+        id,
+      });
+      console.log("delete item advance successfully");
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({ success: false, message: "delete failed" });
     }
   }
 
