@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+
+const {Schema} = mongoose;
 
 const PhongLog = new Schema(
   {
@@ -26,7 +27,7 @@ const PhongLog = new Schema(
       type: String,
       // required: true
     },
-    //thu bo cmt neu gap loi nay
+    // thu bo cmt neu gap loi nay
     // Error: PhongLog validation failed: image: Path `image` is required.
     image: {
       type: String,
@@ -100,6 +101,6 @@ const PhongLog = new Schema(
     // neu co van de trong viec hien gio khong giong voi dong ho thi thu bo cmt 60-71 xem
   },
   { timestamps: true, versionKey: false }
-); //bỏ __v trong document in mongoose
+); // bỏ __v trong document in mongoose
 
 module.exports = mongoose.model("PhongLog", PhongLog, "PhongLog");
