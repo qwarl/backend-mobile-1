@@ -11,7 +11,7 @@ const PaidOn = new Schema(
       type: Number,
     },
     invoiceNumber: {
-      type: String,
+      type: Number,
     },
     payer: {
       type: String,

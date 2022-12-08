@@ -1,6 +1,7 @@
 const Report = require('../../models/LogDeparment/Report.Log')
 const Sell = require('../../models/LogDeparment/Sell')
 const BuyItemLog = require('../../models/LogDeparment/Buy.Log')
+const PaidOn = require('../../models/LogDeparment/Paid.On.Behalf.Of.Log')
 
 module.exports = {
   // [GET] api/report-log/getAll
@@ -49,6 +50,7 @@ module.exports = {
         .populate('info')
         .populate('sellReport')
         .populate('buyReport')
+        .populate('paidOnBehalfOfReport')
       // sell
       // const sumTotal = report[0].sellReport.reduce((a, b) => a + b.total, 0)
       const sumSellTotal = report.sellReport.reduce((a, b) => a + b.total, 0)
@@ -74,7 +76,10 @@ module.exports = {
       report.totalBuy = sumBuyTotal
       report.totalBuyVAT = sumBuyTotalVAT
       // chi ho
-      const sumPaidOnBehalfOfReport = report.price.reduce((a,b)=>a+b.total,0)
+      const sumPaidOnBehalfOfReport = report.paidOnBehalfOfReport.reduce(
+        (a, b) => a + b.price,
+        0,
+      )
       report.totalPaidOnBehalfOf = sumPaidOnBehalfOfReport
       // profit VND
       const profitVND = sumSellToVND - sumBuyTotalVAT
@@ -82,7 +87,7 @@ module.exports = {
       // profit USD
       const profitUSD = profitVND / report.exchangeRate
       report.profitUSD = profitUSD
-      console.log('report1', report)
+      console.log('report', report)
       await report.save()
       res.status(200).json({
         success: true,
@@ -143,11 +148,11 @@ module.exports = {
 
       const report = await Report.findOne({ _id: idReportLog })
       if (report) {
-        report.buyReport.push(sellItem._id)
+        report.sellReport.push(sellItem._id)
         await report.save()
 
         // await report.save()
-        console.log('report', report)
+        // console.log('report', report)
         res.status(200).json({
           success: true,
           report,
@@ -237,7 +242,7 @@ module.exports = {
     try {
       const { paidOnItemDetails, idReportLog } = req.body
 
-      const paidOnItem = new BuyItemLog(paidOnItemDetails)
+      const paidOnItem = new PaidOn(paidOnItemDetails)
       await paidOnItem.save()
 
       const report = await Report.findOne({ _id: idReportLog })

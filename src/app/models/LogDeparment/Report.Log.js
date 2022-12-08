@@ -15,15 +15,15 @@ const ReportLog = new Schema(
       },
     ],
     totalSell: {
-      type: String,
+      type: Number,
       // default: 0,
     },
     totalSellVAT: {
-      type: String,
+      type: Number,
       // default: 0,
     },
     totalSellVND: {
-      type: String,
+      type: Number,
       // default: 0,
     },
     buyReport: [
