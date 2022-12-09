@@ -4,21 +4,13 @@ class AdvanceOPSController {
   //[GET] /AdvanceOPSs/getAll
   async getAll(req, res) {
     try {
-      const OPS = await AdvanceOPS.find({});
-      // console.log(OPS.length);
-      // for (let i = 0; i < OPS.length; i++) {
-      //   const advanceOPS = OPS[i].ops;
-      //   // console.log("Hien Thị" + advanceOPS);
-      // }
-      const advanceOPS = OPS[0].ops;
+      const advanceOPS = await AdvanceOPS.find({});
       res.status(200).json({
         success: true,
         message: "Get all AdvanceOPS  successfully",
         advanceOPS,
       });
-      // console.log("Get all AdvanceOPS successfully");
-      // console.log(JSON.stringify(advanceOPS));
-      // console.log(advanceOPS);
+      console.log("Get all AdvanceOPS successfully");
     } catch (error) {
       console.log(error);
       res.status(400).json({ success: false, message: "Get failed" });
@@ -28,23 +20,8 @@ class AdvanceOPSController {
   async getAllByUserName(req, res) {
     try {
       const AdvanceOPS = await AdvanceOPS.find({
-        userCreate: "Mr Thắng",
+        userCreate: req.params.name,
       });
-      res.status(200).json({
-        success: true,
-        message: "Get all AdvanceOPS log successfully",
-        AdvanceOPS,
-      });
-      console.log("Get all AdvanceOPS log successfully");
-    } catch (error) {
-      console.log(error);
-      res.status(400).json({ success: false, message: "Get failed" });
-    }
-  }
-
-  async getAllOPS(req, res) {
-    try {
-      const AdvanceOPS = await AdvanceOPS.find({ money: req.params.key });
       res.status(200).json({
         success: true,
         message: "Get all AdvanceOPS log successfully",

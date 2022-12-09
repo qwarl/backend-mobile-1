@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const AdvanceOPS = new Schema(
   {
-    ops: [],
+    ops: [Array],
     userUpdate: String,
     userCreate: String,
     creacteAt: String,

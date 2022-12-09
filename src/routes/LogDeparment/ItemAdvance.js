@@ -7,6 +7,5 @@ router.post("/create", ItemAdvanceController.create);
 router.post("/update/:_id", ItemAdvanceController.update);
 router.get("/search", ItemAdvanceController.search);
 router.get("/getAll", ItemAdvanceController.getAll);
-router.delete("/delete/:_id", ItemAdvanceController.deleteItemAdvance);
 
 module.exports = router;
