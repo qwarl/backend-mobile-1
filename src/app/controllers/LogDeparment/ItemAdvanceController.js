@@ -1,19 +1,19 @@
-const ItemAdvance = require("../../models/LogDeparment/ItemAdvance");
+const ItemAdvance = require('../../models/LogDeparment/ItemAdvance')
 
 class ItemAdvanceLogController {
   //[GET] /ItemAdvances/getAll
   async getAll(req, res) {
     try {
-      const itemAdvance = await ItemAdvance.find({});
+      const itemAdvance = await ItemAdvance.find({})
       res.status(200).json({
         success: true,
-        message: "Get all itemAdvance  successfully",
+        message: 'Get all itemAdvance  successfully',
         itemAdvance,
-      });
-      console.log("Get all itemAdvance successfully");
+      })
+      console.log('Get all itemAdvance successfully')
     } catch (error) {
-      console.log(error);
-      res.status(400).json({ success: false, message: "Get failed" });
+      console.log(error)
+      res.status(400).json({ success: false, message: 'Get failed' })
     }
   }
 
@@ -21,23 +21,36 @@ class ItemAdvanceLogController {
     try {
       const itemAdvance = await ItemAdvance.find({
         userCreate: req.params.name,
-      });
+      })
       res.status(200).json({
         success: true,
-        message: "Get all ItemAdvance log successfully",
+        message: 'Get all ItemAdvance log successfully',
         itemAdvance,
-      });
-      console.log("Get all ItemAdvance log successfully");
+      })
+      // console.log("Get all ItemAdvance log successfully");
     } catch (error) {
-      console.log(error);
-      res.status(400).json({ success: false, message: "Get failed" });
+      console.log(error)
+      res.status(400).json({ success: false, message: 'Get failed' })
     }
   }
-
+  async deleteItemAdvance(req, res) {
+    try {
+      const id = await ItemAdvance.findByIdAndDelete(req.params._id)
+      res.status(200).json({
+        success: true,
+        message: 'delete item advance successfully',
+        id,
+      })
+      // console.log('delete item advance successfully')
+    } catch (error) {
+      console.log(error)
+      res.status(400).json({ success: false, message: 'delete failed' })
+    }
+  }
   //[POST] /ItemAdvances/create
   async create(req, res) {
     try {
-      const newItemAdvance = new ItemAdvance(req.body);
+      const newItemAdvance = new ItemAdvance(req.body)
       //   let newCode = await ItemAdvance.findOne().sort({ _id: -1 }).limit(1);
       //   // console.log(newCode.code);
       //   let counter;
@@ -70,15 +83,15 @@ class ItemAdvanceLogController {
       //   console.log(code);
       //   newItemAdvance.idfile = code;
       //   console.log(newItemAdvance);
-      await newItemAdvance.save();
+      await newItemAdvance.save()
       res.status(200).json({
         success: true,
-        message: "Create new ItemAdvance successfully",
+        message: 'Create new ItemAdvance successfully',
         newItemAdvance,
-      });
+      })
     } catch (error) {
-      console.log(error);
-      res.status(400).json({ success: false, message: "Create failed" });
+      console.log(error)
+      res.status(400).json({ success: false, message: 'Create failed' })
     }
   }
 
@@ -88,24 +101,24 @@ class ItemAdvanceLogController {
       const updateItemAdvance = await ItemAdvance.findByIdAndUpdate(
         req.params._id,
         req.body,
-        { new: true }
-      );
+        { new: true },
+      )
       res.status(200).json({
         success: true,
-        message: "Update phong log successfully",
+        message: 'Update phong log successfully',
         updateItemAdvance,
-      });
-      console.log("Update phong log successfully");
+      })
+      console.log('Update phong log successfully')
     } catch (error) {
-      console.log(error);
-      res.status(400).json({ success: false, message: "Update failed" });
+      console.log(error)
+      res.status(400).json({ success: false, message: 'Update failed' })
     }
   }
 
   //[GET] /ItemAdvances/search
   async search(req, res) {
     try {
-      const { pol, pod, month, freight } = req.query;
+      const { pol, pod, month, freight } = req.query
       // console.log(pol, pod, type, month, continent);
 
       //code sua
@@ -113,30 +126,30 @@ class ItemAdvanceLogController {
       if (pol && month && freight) {
         const ItemAdvances = await ItemAdvance.find({
           $and: [{ pol: pol }, { month: month }, { freight: freight }],
-        });
+        })
         return res.status(200).json({
           success: true,
-          message: "Search phong log successfully",
+          message: 'Search phong log successfully',
           ItemAdvances,
-        });
-        console.log("Search phong log successfully");
+        })
+        console.log('Search phong log successfully')
       }
       if (pod && month && freight) {
         const ItemAdvances = await ItemAdvance.find({
           $and: [{ pod: pod }, { month: month }, { freight: freight }],
-        });
+        })
         return res.status(200).json({
           success: true,
-          message: "Search phong log successfully",
+          message: 'Search phong log successfully',
           ItemAdvances,
-        });
-        console.log("Search phong log successfully");
+        })
+        console.log('Search phong log successfully')
       }
     } catch (error) {
-      console.log(error);
-      return res.status(400).json({ success: false, message: "Search failed" });
+      console.log(error)
+      return res.status(400).json({ success: false, message: 'Search failed' })
     }
   }
 }
 
-module.exports = new ItemAdvanceLogController();
+module.exports = new ItemAdvanceLogController()
