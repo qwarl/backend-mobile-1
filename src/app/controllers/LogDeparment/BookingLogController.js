@@ -1,7 +1,7 @@
 const Booking = require("../../models/LogDeparment/Booking");
 
 class BookingLogController {
-  //[GET] /Bookings/getAll
+  // [GET] /Bookings/getAll
   async getAll(req, res) {
     try {
       const bookingLog = await Booking.find({});
