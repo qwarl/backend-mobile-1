@@ -36,6 +36,7 @@ module.exports = {
       res.status(200).json({
         success: true,
         report,
+        id: report._id,
       })
     } catch (error) {
       console.log(error)
@@ -83,9 +84,14 @@ module.exports = {
       report.totalPaidOnBehalfOf = sumPaidOnBehalfOfReport
       // profit VND
       const profitVND = sumSellToVND - sumBuyTotalVAT
+      // profit VAT
+      const profitVAT= sumSellTotalActualPayment - sumBuyTotalVAT
       report.profitVND = profitVND
+      report.profitVAT = profitVAT
       // profit USD
-      const profitUSD = profitVND / report.exchangeRate
+      const profitUSD = report.exchangeRate
+        ? profitVND / report.exchangeRate
+        : 0
       report.profitUSD = profitUSD
       console.log('report', report)
       await report.save()
@@ -262,4 +268,22 @@ module.exports = {
       res.status(400).json({ success: false, message: error })
     }
   },
+
+  // [PUT] /update-report-log-by-id/:_id (update report log by id)
+  updateReportById: async (req, res) => {
+    try {
+      const report = await Report.findOneAndUpdate(
+        req.params._id,
+        req.body,
+        { new: true },
+      )
+      res.status(200).json({
+        success: true,
+        report,
+      })
+    } catch (error) {
+      res.status(400).json({ success: false, message: error })
+      console.log(error)
+    }
+  }
 }

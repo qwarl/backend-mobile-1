@@ -56,6 +56,9 @@ const ReportLog = new Schema(
     profitUSD:{
       type: Number,
     },
+    profitVAT:{
+      type: Number,
+    }
   },
   {
     timestamps: true,

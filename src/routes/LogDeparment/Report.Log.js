@@ -12,5 +12,6 @@ router.put(
   '/update-sell-item-details/:_id',
   report_log_controller.updateSellItemDetails,
 )
+router.put('/update-report-log-by-id/:_id', report_log_controller.updateReportById)
 
 module.exports = router
