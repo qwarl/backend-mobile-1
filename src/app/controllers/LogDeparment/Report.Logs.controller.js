@@ -44,6 +44,7 @@ module.exports = {
     }
   },
 
+  // get report by id
   // [GET] api/report-log/getById/:_id
   getById: async (req, res) => {
     try {
@@ -52,52 +53,107 @@ module.exports = {
         .populate('sellReport')
         .populate('buyReport')
         .populate('paidOnBehalfOfReport')
+
+      // 22/12/2022
       // sell
-      // const sumTotal = report[0].sellReport.reduce((a, b) => a + b.total, 0)
-      const sumSellTotal = report.sellReport.reduce((a, b) => a + b.total, 0)
-      // calculate sum of array
-      const sumSellTotalActualPayment = report.sellReport.reduce(
-        (a, b) => a + b.actualPayment,
-        0,
+      // truoc thue
+      // tong tien totalVND (totalVND chi la quantity*unitPrice)
+      const totalSellVND = report.sellReport.reduce((a, b) => a + b.totalVND, 0)
+      // tong tien totalUSD (totalUSD chi la quantity*unitPrice)
+      const totalSellUSD = report.sellReport.reduce((a, b) => a + b.totalUSD, 0)
+      // tong tien totalEUR (totalEUR chi la quantity*unitPrice)
+      // const totalEUR = report.sellReport.reduce((a, b) => a + b.totalEUR, 0)
+      // list sell item of report and if currency ='USD', cal sum of changeToVND
+      let changeSellToVND = 0
+      report.sellReport.forEach((item) => {
+        if (item.currency === 'USD') {
+          changeSellToVND += item.changeToVND
+        }
+      })
+      let changeSellVATToVND = 0
+      report.sellReport.forEach((item) => {
+        if (item.currency === 'USD') {
+          changeSellVATToVND += item.changeToVNDVAT
+        }
+      })
+      // total sell (totalVND+totalUSD(changeToVND)) chua VAT
+      const totalSell = totalSellVND + changeSellToVND
+
+      // sau thue
+      // tong tien actualPaymentVND (totalVND sau VAT)
+      const actualPaymentSellVND = Math.round(
+        report.sellReport.reduce((a, b) => a + b.actualPaymentVND, 0),
       )
-      // calculate sum of array
-      const sumSellToVND = report.sellReport.reduce(
-        (a, b) => a + b.approximatelyToVnd,
-        0,
+      // tong tien actualPaymentUSD (totalUSD sau VAT)
+      const actualPaymentSellUSD = Math.round(
+        report.sellReport.reduce((a, b) => a + b.actualPaymentUSD, 0),
       )
-      report.totalSell = sumSellTotal
-      report.totalSellVAT = sumSellTotalActualPayment
-      report.totalSellVND = sumSellToVND
+
+      // tong thanh tien (chi tinh VND, ko quy doi gi ca)
+      const approximatelySellToVnd = Math.round(
+        report.sellReport.reduce((a, b) => a + b.approximatelyToVnd, 0),
+      )
+      // total sell (actualPaymentVND+actualPaymentUSD(VND))
+      const totalSellVAT = actualPaymentSellVND + changeSellVATToVND
       // buy
-      const sumBuyTotal = report.buyReport.reduce((a, b) => a + b.total, 0)
-      const sumBuyTotalVAT = report.buyReport.reduce(
-        (a, b) => a + b.actualPayment,
+      // truoc thue
+      // tong tien tung don vi truoc thue (quy doi ra VND luon)
+      const totalBuyVND = report.buyReport.reduce((a, b) => a + b.totalVND, 0)
+      const totalBuyUSDAndEURToVND = report.buyReport.reduce(
+        (a, b) => a + b.changeToVND,
         0,
       )
-      report.totalBuy = sumBuyTotal
-      report.totalBuyVAT = sumBuyTotalVAT
-      // chi ho
-      const sumPaidOnBehalfOfReport = report.paidOnBehalfOfReport.reduce(
+      // const totalBuyEUR = report.buyReport.reduce((a, b) => a + b.totalEUR, 0)
+      // tong tien tat ca loai phi chuaw VAT (quy ra VND)
+      const totalBuy = totalBuyUSDAndEURToVND + totalBuyVND
+      // sau thue
+      // tong tien tung don vi sau thue (quy ra VND)
+      const actualPaymentBuyVND = report.buyReport.reduce(
+        (a, b) => a + b.actualPaymentVND,
+        0,
+      )
+      const totalBuyUSDAndEURToVNDVAT = report.buyReport.reduce(
+        (a, b) => a + b.changeToVNDVAT,
+        0,
+      )
+      // total buy vat
+      const totalBuyVAT = actualPaymentBuyVND + totalBuyUSDAndEURToVNDVAT
+
+      // total paidon (chi ho)
+      // const totalPaidOn=report.PaidOn.reduce(
+      //   (a, b) => a + b.price,
+      //   0,
+      // )
+      const totalPaidOn = report.paidOnBehalfOfReport.reduce(
         (a, b) => a + b.price,
         0,
       )
-      report.totalPaidOnBehalfOf = sumPaidOnBehalfOfReport
-      // profit VND
-      const profitVND = sumSellToVND - sumBuyTotalVAT
-      // profit VAT
-      const profitVAT= sumSellTotalActualPayment - sumBuyTotalVAT
-      report.profitVND = profitVND
-      report.profitVAT = profitVAT
-      // profit USD
-      const profitUSD = report.exchangeRate
-        ? profitVND / report.exchangeRate
-        : 0
-      report.profitUSD = profitUSD
-      console.log('report', report)
-      await report.save()
+      // loi nhuan truoc VAT
+      const profit = totalSell - totalBuy
+
+      // loi nhuan sau VAT
+      const profitVAT = totalSellVAT - totalBuyVAT
+      //
       res.status(200).json({
         success: true,
         report,
+        totalSellVND,
+        totalSell,
+        totalSellVAT,
+        totalSellUSD,
+        changeSellVATToVND,
+        changeSellToVND,
+        actualPaymentSellVND,
+        actualPaymentSellUSD,
+        approximatelySellToVnd,
+
+        totalBuy,
+        totalBuyVAT,
+
+        profit,
+        profitVAT,
+
+        totalPaidOn,
       })
     } catch (error) {
       res.status(400).json({ success: false, message: error })
@@ -108,7 +164,7 @@ module.exports = {
   // [PUT] api/report-log/update-sell-item-details/:id
   updateSellItemDetails: async (req, res) => {
     try {
-      const sellItemUpdate = await Sell.findOneAndUpdate(
+      const sellItemUpdate = await Sell.findByIdAndUpdate(
         req.params._id,
         req.body,
         { new: true },
@@ -120,6 +176,40 @@ module.exports = {
     } catch (error) {
       res.status(400).json({ success: false, message: error })
       console.log(error)
+    }
+  },
+
+  // [PUT] api/report-log/update-buy-item-details/:id
+  updateBuyItemDetails: async (req, res) => {
+    try {
+      const buyItemUpdate = await BuyItemLog.findByIdAndUpdate(
+        req.params._id,
+        req.body,
+        { new: true },
+      )
+      res.status(200).json({
+        success: true,
+        buyItemUpdate,
+      })
+    } catch (error) {
+      res.status(400).json({ success: false, message: error })
+    }
+  },
+
+  // [PUT] api/report-log/update-paid-on-item-details/:id
+  updatePaidOnItemDetails: async (req, res) => {
+    try {
+      const paidOnItemUpdate = await PaidOn.findByIdAndUpdate(
+        req.params._id,
+        req.body,
+        { new: true },
+      )
+      res.status(200).json({
+        success: true,
+        paidOnItemUpdate,
+      })
+    } catch (error) {
+      res.status(400).json({ success: false, message: error })
     }
   },
 
@@ -272,11 +362,9 @@ module.exports = {
   // [PUT] /update-report-log-by-id/:_id (update report log by id)
   updateReportById: async (req, res) => {
     try {
-      const report = await Report.findOneAndUpdate(
-        req.params._id,
-        req.body,
-        { new: true },
-      )
+      const report = await Report.findOneAndUpdate(req.params._id, req.body, {
+        new: true,
+      })
       res.status(200).json({
         success: true,
         report,
@@ -285,5 +373,51 @@ module.exports = {
       res.status(400).json({ success: false, message: error })
       console.log(error)
     }
-  }
+  },
+
+  // [GET] /get-sell-item-details/:id
+  getSellItemDetails: async (req, res) => {
+    try {
+      const sellItemDetails = await Sell.findOneAndUpdate({
+        _id: req.params._id,
+      })
+      res.status(200).json({
+        success: true,
+        sellItemDetails,
+      })
+    } catch (error) {
+      res.status(400).json({ success: false, message: error })
+      console.log(error)
+    }
+  },
+
+  // [GET] /get-buy-item-details/:id
+  getBuyItemDetails: async (req, res) => {
+    try {
+      const buyItemDetails = await BuyItemLog.findOneAndUpdate({
+        _id: req.params._id,
+      })
+      res.status(200).json({
+        success: true,
+        buyItemDetails,
+      })
+    } catch (error) {
+      res.status(400).json({ success: false, message: error })
+    }
+  },
+
+  // [GET] /get-paid-on-item-details/:id
+  getPaidOnItemDetails: async (req, res) => {
+    try {
+      const paidOnItemDetails = await PaidOn.findOneAndUpdate({
+        _id: req.params._id,
+      })
+      res.status(200).json({
+        success: true,
+        paidOnItemDetails,
+      })
+    } catch (error) {
+      res.status(400).json({ success: false, message: error })
+    }
+  },
 }

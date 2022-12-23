@@ -7,6 +7,12 @@ const BuyItemLog = new Schema(
     typeOfFee: {
       type: String,
     },
+    COM_KH:{
+      type:String,
+    },
+    price_COM_KH:{
+      type:String,
+    },
     quantity: {
       // type: Number,
       type: Number,
@@ -18,16 +24,45 @@ const BuyItemLog = new Schema(
     currency: {
       type: String,
     },
-    total: {
+    totalVND: {
       // unitPrice * quantity
       // type: Number,
       type: Number,
+    },
+    totalUSD: {
+      // unitPrice * quantity
+      // type: Number,
+      type: Number,
+    },
+    totalEUR: {
+      // unitPrice * quantity
+      // type: Number,
+      type: Number,
+    },
+    changeToVND:{
+      type:Number,
+    },
+    changeToVNDVAT:{
+      type:Number,
     },
     VAT: {
       // type: Number,
       type: Number,
     },
-    actualPayment: {
+    exchangeRate:{
+      type:Number,
+    },
+    actualPaymentVND: {
+      // unitPrice(currency) * quantity * (1 + VAT)
+      // type: Number,
+      type: Number,
+    },
+    actualPaymentUSD: {
+      // unitPrice(currency) * quantity * (1 + VAT)
+      // type: Number,
+      type: Number,
+    },
+    actualPaymentEUR: {
       // unitPrice(currency) * quantity * (1 + VAT)
       // type: Number,
       type: Number,
