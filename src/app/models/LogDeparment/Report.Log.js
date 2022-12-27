@@ -15,15 +15,18 @@ const ReportLog = new Schema(
       },
     ],
     totalSell: {
-      type: Number,
+      // type: Number,
+      type: String,
       // default: 0,
     },
     totalSellVAT: {
-      type: Number,
+      // type: Number,
+      type: String,
       // default: 0,
     },
     totalSellVND: {
-      type: Number,
+      // type: Number,
+      type: String,
       // default: 0,
     },
     buyReport: [
@@ -33,10 +36,12 @@ const ReportLog = new Schema(
       },
     ],
     totalBuy: {
-      type: Number,
+      // type: Number,
+      type: String,
     },
     totalBuyVAT: {
-      type: Number,
+      // type: Number,
+      type: String,
     },
     paidOnBehalfOfReport: [
       {
@@ -45,19 +50,23 @@ const ReportLog = new Schema(
       },
     ],
     totalPaidOnBehalfOf: {
-      type: Number,
+      // type: Number,
+      type: String,
     },
     exchangeRate: {
       type: Number,
     },
     profitVND:{
-      type: Number,
+      // type: Number,
+      type: String,
     },
     profitUSD:{
-      type: Number,
+      // type: Number,
+      type: String,
     },
     profitVAT:{
-      type: Number,
+      // type: Number,
+      type: String,
     }
   },
   {
