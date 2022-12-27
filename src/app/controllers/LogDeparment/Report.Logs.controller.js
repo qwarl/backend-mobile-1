@@ -362,7 +362,7 @@ module.exports = {
   // [PUT] /update-report-log-by-id/:_id (update report log by id)
   updateReportById: async (req, res) => {
     try {
-      const report = await Report.findOneAndUpdate(req.params._id, req.body, {
+      const report = await Report.findByIdAndUpdate(req.params._id, req.body, {
         new: true,
       })
       res.status(200).json({

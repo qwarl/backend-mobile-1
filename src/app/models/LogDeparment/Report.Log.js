@@ -55,6 +55,7 @@ const ReportLog = new Schema(
     },
     exchangeRate: {
       type: Number,
+      default:0,
     },
     profitVND:{
       // type: Number,
