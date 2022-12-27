@@ -2,6 +2,7 @@ const Report = require('../../models/LogDeparment/Report.Log')
 const Sell = require('../../models/LogDeparment/Sell')
 const BuyItemLog = require('../../models/LogDeparment/Buy.Log')
 const PaidOn = require('../../models/LogDeparment/Paid.On.Behalf.Of.Log')
+const ItemAdvance = require('../../models/LogDeparment/ItemAdvance')
 
 module.exports = {
   // [GET] api/report-log/getAll
@@ -12,6 +13,7 @@ module.exports = {
         .populate('info')
         .populate('sellReport')
         .populate('buyReport')
+        .populate('advanceOPS')
       res.status(200).json({
         success: true,
         // message: "Get report log successfully",
@@ -213,6 +215,22 @@ module.exports = {
     }
   },
 
+  updateAdvaceOPSItemDetails: async (req, res) => {
+    try {
+      const advanceOPSItemUpdate = await ItemAdvance.findByIdAndUpdate(
+        req.params._id,
+        req.body,
+        { new: true },
+      )
+      res.status(200).json({
+        success: true,
+        advanceOPSItemUpdate,
+      })
+    } catch (error) {
+      res.status(400).json({ success: false, message: error })
+    }
+  },
+
   // [POST] api/report-log/add-sell-item-details
   addSellItemDetails: async (req, res) => {
     // add sell item details directly to report log
@@ -359,10 +377,35 @@ module.exports = {
     }
   },
 
+  addAdvanceOPS: async (req, res) => {
+    try {
+      const { advanceOPSItemDetail, idReportLog } = req.body
+
+      const advanceOPS = new ItemAdvance(advanceOPSItemDetail)
+      await advanceOPS.save()
+
+      const report = await Report.findOne({ _id: idReportLog })
+      if (report) {
+        report.advanceOps.push(advanceOPS._id)
+        await report.save()
+
+        // await report.save()
+        // console.log('report', report)
+        res.status(200).json({
+          success: true,
+          report,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      res.status(400).json({ success: false, message: error })
+    }
+  },
+
   // [PUT] /update-report-log-by-id/:_id (update report log by id)
   updateReportById: async (req, res) => {
     try {
-      const report = await Report.findOneAndUpdate(req.params._id, req.body, {
+      const report = await Report.findByIdAndUpdate(req.params._id, req.body, {
         new: true,
       })
       res.status(200).json({
@@ -415,6 +458,20 @@ module.exports = {
       res.status(200).json({
         success: true,
         paidOnItemDetails,
+      })
+    } catch (error) {
+      res.status(400).json({ success: false, message: error })
+    }
+  },
+  // [GET] /get-paid-on-item-details/:id
+  getAdvanceOPSItemDetails: async (req, res) => {
+    try {
+      const advanceOPSItemDetails = await ItemAdvance.findOneAndUpdate({
+        _id: req.params._id,
+      })
+      res.status(200).json({
+        success: true,
+        advanceOPSItemDetails,
       })
     } catch (error) {
       res.status(400).json({ success: false, message: error })

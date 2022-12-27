@@ -49,6 +49,12 @@ const ReportLog = new Schema(
         ref: 'PaidOn',
       },
     ],
+    advanceOps: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'ItemAdvance',
+      },
+    ],
     totalPaidOnBehalfOf: {
       // type: Number,
       type: String,
