@@ -3,6 +3,7 @@ const Sell = require('../../models/LogDeparment/Sell')
 const BuyItemLog = require('../../models/LogDeparment/Buy.Log')
 const PaidOn = require('../../models/LogDeparment/Paid.On.Behalf.Of.Log')
 const ItemAdvance = require('../../models/LogDeparment/ItemAdvance')
+const FinalSettlement = require('../../models/LogDeparment/FinalSettlement')
 
 module.exports = {
   // [GET] api/report-log/getAll
@@ -13,7 +14,8 @@ module.exports = {
         .populate('info')
         .populate('sellReport')
         .populate('buyReport')
-        .populate('advanceOPS')
+        .populate('advanceOps')
+        .populate('finalSettlement')
       res.status(200).json({
         success: true,
         // message: "Get report log successfully",
@@ -55,6 +57,8 @@ module.exports = {
         .populate('sellReport')
         .populate('buyReport')
         .populate('paidOnBehalfOfReport')
+        .populate('advanceOps')
+        .populate('finalSettlement')
 
       // 22/12/2022
       // sell
@@ -78,6 +82,12 @@ module.exports = {
           changeSellVATToVND += item.changeToVNDVAT
         }
       })
+      const totalOPS = report.advanceOps.reduce(
+        (a, b) => Number(a) + Number(b.money),
+        0,
+      )
+
+      const finalSettlementOPS = report.finalSettlement.totalSettlement
       // total sell (totalVND+totalUSD(changeToVND)) chua VAT
       const totalSell = totalSellVND + changeSellToVND
 
@@ -150,7 +160,9 @@ module.exports = {
         approximatelySellToVnd,
 
         totalBuy,
+        finalSettlementOPS,
         totalBuyVAT,
+        totalOPS,
 
         profit,
         profitVAT,
@@ -225,6 +237,21 @@ module.exports = {
       res.status(200).json({
         success: true,
         advanceOPSItemUpdate,
+      })
+    } catch (error) {
+      res.status(400).json({ success: false, message: error })
+    }
+  },
+  updateFinalSettlementItemDetails: async (req, res) => {
+    try {
+      const finalSettlentItemUpdate = await FinalSettlement.findByIdAndUpdate(
+        req.params._id,
+        req.body,
+        { new: true },
+      )
+      res.status(200).json({
+        success: true,
+        finalSettlentItemUpdate,
       })
     } catch (error) {
       res.status(400).json({ success: false, message: error })
@@ -402,6 +429,31 @@ module.exports = {
     }
   },
 
+  addFinalSettlement: async (req, res) => {
+    try {
+      const { finalSettlementItemDetail, idReportLog } = req.body
+
+      const finalSettlement = new FinalSettlement(finalSettlementItemDetail)
+      await finalSettlement.save()
+
+      const report = await Report.findOne({ _id: idReportLog })
+      if (report) {
+        report.finalSettlement.push(finalSettlement._id)
+        await report.save()
+
+        // await report.save()
+        // console.log('report', report)
+        res.status(200).json({
+          success: true,
+          report,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      res.status(400).json({ success: false, message: error })
+    }
+  },
+
   // [PUT] /update-report-log-by-id/:_id (update report log by id)
   updateReportById: async (req, res) => {
     try {
@@ -472,6 +524,21 @@ module.exports = {
       res.status(200).json({
         success: true,
         advanceOPSItemDetails,
+      })
+    } catch (error) {
+      res.status(400).json({ success: false, message: error })
+    }
+  },
+  getFinalSettlementItemDetails: async (req, res) => {
+    try {
+      const finalSettlementItemDetails = await FinalSettlement.findOneAndUpdate(
+        {
+          _id: req.params._id,
+        },
+      )
+      res.status(200).json({
+        success: true,
+        finalSettlementItemDetails,
       })
     } catch (error) {
       res.status(400).json({ success: false, message: error })

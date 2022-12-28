@@ -55,26 +55,36 @@ const ReportLog = new Schema(
         ref: 'ItemAdvance',
       },
     ],
+    finalSettlement: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'FinalSettlement',
+      },
+    ],
+    totalOPS: {
+      // type: Number,
+      type: String,
+    },
     totalPaidOnBehalfOf: {
       // type: Number,
       type: String,
     },
     exchangeRate: {
       type: Number,
-      default:0,
+      default: 0,
     },
-    profitVND:{
+    profitVND: {
       // type: Number,
       type: String,
     },
-    profitUSD:{
+    profitUSD: {
       // type: Number,
       type: String,
     },
-    profitVAT:{
+    profitVAT: {
       // type: Number,
       type: String,
-    }
+    },
   },
   {
     timestamps: true,
